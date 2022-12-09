@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Создать игру
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+<main>
+    <div class="window">
+        <div class="window-cutting text-input">Игра:</div>
+        <form method="post">
+            <h3 class="window-item">Скопируйте токен и отправьте друзьям!</h3>
+            <code class="window-item">{{ token }}</code>
+            <input type="submit" name="btn-create-game" class="btn btn-success text-input window-item" value="Начать игру">
+
+            <input type="hidden" name="token" value="{{ token }}">
+            <input type="hidden" name="name" value="{{ name }}">
+            <input type="hidden" name="has_board" value="{{ has_board }}">
+        </form>
+    </div>
+</main>
+{% endblock %}

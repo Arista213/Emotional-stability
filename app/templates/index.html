@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Добавить пользователя
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+<main>
+    <div  class="window">
+        {% if start %}
+        <h1 class="window-item">Здравствуйте!</h1>
+        <img class="window-item" height="120" src="{{ url_for('static', filename='images/logo.svg') }}" alt="ИринаМантроваCorporation">
+        <form method="post">
+            <input type="submit" name="btn-role-master" class="btn btn-success text-input window-item" value="Создать комнату">
+            <input type="submit" name="btn-role-player" class="btn btn-success text-input window-item" value="Войти в комнату">
+        </form>
+        {% else %}
+        <form method="post">
+            <label>
+                <input autocomplete="off" type="text" name="name" class="form-control text-input window-item"
+                       placeholder="Ваше имя" maxlength="16" required>
+            </label>
+            <h1 class="window-item">Нужно ли вам поле?</h1>
+            <input type="submit" name="btn-creating-board" class="btn btn-success text-input window-item" value="Да">
+            <input type="submit" name="btn-creating-board" class="btn btn-success text-input window-item" value="Нет">
+        </form>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

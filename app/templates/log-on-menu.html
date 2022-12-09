@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Вход в комнату
+{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+<main>
+    <div class="window">
+        <h1 class="window-item">Вход в игру</h1>
+        <form method="post">
+            <label>
+                <input autocomplete="off" type="text" name="name" class="form-control text-input window-item"
+                       maxlength="16" placeholder="Ваше имя" required>
+                <input autocomplete="off" type="text" name="token" class="form-control text-input window-item"
+                       maxlength="8" placeholder="Вставьте токен игры" required>
+            </label>
+
+            {% for msg in get_flashed_messages() %}
+                <strong style="font-size: 16px; color: #d11507; font-family: Fira Code,serif">
+                    Что-то пошло не так, проверьте данные
+                </strong>
+            {% endfor %}
+            <input type="submit" name="btn-log-on" class="btn btn-success text-input window-item" value="Войти">
+        </form>
+    </div>
+</main>
+{% endblock %}
