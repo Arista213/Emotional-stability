@@ -40,8 +40,11 @@ def index():
                     return render_template('log-on-menu.html')
                 else:
                     user = User(name=name, role="player")
+                    board = Board()
+                    user.board = board
                     game.users.append(user)
                     db.session.add(user)
+                    db.session.add(board)
                     db.session.commit()
                     res.set_cookie(key='user_id', value=str(user.id), max_age=60 * 60)
             return res
@@ -67,13 +70,19 @@ def index():
 
 @app.route('/<token>')
 def gaming(token):
-    if Game.query.filter(Game.id == token).first() is None and token==request.cookies.get('game_id'):
+    if Game.query.filter(Game.id == token).first() is None and token == request.cookies.get('game_id'):
         return redirect(url_for('index'))
-    user = User.query.filter(User.id == int(request.cookies.get('user_id'))).first()
+    user = User.query.filter(
+        request.cookies.get('user_id') is not None and User.id == int(request.cookies.get('user_id'))).first()
     if user is None:
         return redirect(url_for('index'))
 
     if user.role == 'master':
         if user.board is None:
             return render_template('game-master-mode.html')
+    return render_template('game-player-mode.html')
+
+
+@app.route('/test')
+def test():
     return render_template('game-player-mode.html')

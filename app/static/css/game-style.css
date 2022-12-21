@@ -1,0 +1,90 @@
+body{
+  margin: 0;
+  background: #3C8662;
+}
+
+main{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  display: flex;
+}
+
+.left-panel {
+  background: blue;
+  flex-direction: column;
+  width: 20%;
+
+  display: flex;
+  flex-flow: column;
+
+  align-items: stretch;
+}
+
+.resizer{
+  flex-direction: column;
+  width: 20px;
+  padding: 0;
+  cursor: col-resize;
+}
+
+.resizer:before{
+  content: '';
+  display: block;
+  width: 4px;
+  height: 100%;
+  background: red;
+  margin: 0 auto;
+}
+
+.field {
+  background: red;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.left-panel > .left-panel-item{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-basis: content;
+}
+
+.left-panel > .left-panel-item > .note{
+  box-sizing: border-box;
+  width: 100%;
+  resize: vertical;
+}
+
+.left-panel > .left-panel-item > .chips-container{
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+}
+
+.left-panel > .left-panel-item > .chips-container > .chip{
+  height: 80px;
+  width: 80px;
+}
+
+.left-panel > .left-panel-item > .gamer{
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  width: 230px;
+
+  box-shadow: 0 3px 5px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 45px;
+  padding: 4px 10px;
+}
+
+.left-panel > .left-panel-item > .gamer > .gamer-name{
+
+}
+
+.left-panel > .left-panel-item > .gamer > .view-field{
+  height: 25px;
+  width: 25px;
+  ;
+}

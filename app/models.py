@@ -66,7 +66,7 @@ class Board(db.Model):
     def json(self):
         result = {'id': self.id,
                   'user_id': self.user_id,
-                  'trait_name': self.name,
+                  'trait_name': self.trait_name,
                   'note': self.note.json(),
                   'chips': []}
         for chip in self.chips:
