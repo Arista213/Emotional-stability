@@ -1,46 +1,86 @@
 body{
   margin: 0;
   background: #3C8662;
+  font-family: cursive;
+}
+header{
+  display: flex;
+  height: 15%;
+}
+
+header > .token-container {
+  padding-left: 5px;
+  display: flex;
+  align-items: center;
+}
+
+header > .token-container > #token {
+
+}
+
+header > .title-board {
+  flex-grow: 1;
+  text-align: center;
 }
 
 main{
   width: 100%;
-  height: 100%;
+  height: 85%;
   position: fixed;
   display: flex;
 }
 
-.left-panel {
-  background: blue;
-  flex-direction: column;
-  width: 20%;
+.show-btn {
+  position: fixed;
+  z-index: 999;
+  right: 5%;
+  bottom: 10%;
+  padding: 10px;
+  cursor:pointer;
+  border: 1px solid #333;
+}
 
+.show-btn-off {
+  background: lightgray;
+  transition: background 0.4s ease-in-out;
+}
+
+.show-btn-off:hover{
+    background:gray;
+}
+
+.show-btn-on {
+  background: yellowgreen;
+  transition: background 0.4s ease-in-out;
+}
+
+.show-btn-on:hover{
+    background:green;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  border-radius: 10px;
+  flex-direction: column;
+  flex-grow: 1;
+  margin-right: 15%;
+  margin-left: 5%;
+}
+
+.left-panel {
+  background: #60AC88;
+  flex-direction: column;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 20px;
   display: flex;
   flex-flow: column;
 
   align-items: stretch;
-}
-
-.resizer{
-  flex-direction: column;
-  width: 20px;
-  padding: 0;
-  cursor: col-resize;
-}
-
-.resizer:before{
-  content: '';
-  display: block;
-  width: 4px;
-  height: 100%;
-  background: red;
-  margin: 0 auto;
-}
-
-.field {
-  background: red;
-  flex-direction: column;
-  flex-grow: 1;
 }
 
 .left-panel > .left-panel-item{
@@ -77,6 +117,7 @@ main{
   box-shadow: 0 3px 5px 5px rgba(0, 0, 0, 0.1);
   border-radius: 45px;
   padding: 4px 10px;
+  margin-bottom: 4px;
 }
 
 .left-panel > .left-panel-item > .gamer > .gamer-name{
@@ -86,5 +127,41 @@ main{
 .left-panel > .left-panel-item > .gamer > .view-field{
   height: 25px;
   width: 25px;
-  ;
+  cursor: pointer;
+}
+
+.field > .board{
+  height: 100%;
+}
+
+.copy-btn{
+  background: lightgray;
+  padding: 2px;
+  border-radius: 5px;
+  cursor:pointer;
+  transition: background 0.4s ease-in-out;
+}
+.copy-btn:hover{
+    background:darkgray;
+}
+
+.btn-success{
+    margin-top: 10px;
+    background: #94B49F;
+    box-shadow: 0 3px 5px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 45px;
+    cursor:pointer;
+    transition: background 0.4s ease-in-out;
+    padding: 10px 20px;
+    min-width: 90%;
+}
+
+.btn-success:hover{
+    background:#3c8662;
+}
+
+code{
+    font-family: "Fira Code", monospace;
+    color: rgba(0, 0, 0, 0.84);
+    font-size: 32px;
 }

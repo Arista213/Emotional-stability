@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Создать игру
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/game-style.css') }}">
+{% endblock %}
+
+{% block body %}
+    <header>
+        <div class="token-container">
+            <h1>Токен: </h1>
+            <code id="token">{{ token }}</code>
+            <img id="copy-token" class="copy-btn" src="{{ url_for('static', filename='images/icons/copy.svg') }}" alt="copy" height="32px">
+            <script src="{{ url_for('static', filename='js/copyToken.js') }}" async></script>
+        </div>
+        <h1 id="title-board" class="title-board">
+        </h1>
+    </header>
+    <main>
+        <div class="left-panel">
+            <label class="left-panel-item">
+                <p class="section-title">Блокнот</p>
+                <textarea class="note"></textarea>
+            </label>
+            <div id="chips" class="left-panel-item chips"  style="display: none">
+                <p class="section-title">Фишки</p>
+                <div class="chips-container">
+                    <img src="{{ url_for('static', filename='images/chips/white-chip.svg') }}" class="chip"
+                        id="white-chip" alt="white-chip">
+                    <img src="{{ url_for('static', filename='images/chips/black-chip.svg') }}" class="chip"
+                        id="black-chip" alt="white-chip">
+                </div>
+            </div>
+            <form id="back-form" class="left-panel-item" method="post" style="display: none">
+                <input id="back-btn" type="submit" class="btn-success" name="back-btn" value="Вернуться к себе">
+            </form>
+            <form id="users-container" class="left-panel-item" method="post">
+                <p class="section-title">Игроки</p>
+            </form>
+        </div>
+        <div id="field" class="field">
+        </div>
+        <img id="show" class="show-btn" src="{{ url_for('static', filename='images/icons/show.svg') }}" alt="copy" height="32px" hidden>
+    </main>
+    <script src="{{ url_for('static', filename='js/updateUsers.js') }}" async></script>
+    <script src="{{ url_for('static', filename='js/showBtnController.js') }}" async></script>
+{% endblock %}

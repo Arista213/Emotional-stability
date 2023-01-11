@@ -87,7 +87,10 @@ def request_user(token, user_id):
 
         elif request.method == 'PUT':
             data = request.json
-            user.name = data['name']
+            if 'name' in data:
+                user.name = data['name']
+            if 'can_view' in data:
+                user.can_view = data['can_view']
             db.session.commit()
             return jsonify(user.json())
 

@@ -35,6 +35,7 @@ class User(db.Model):
     game_id = db.Column(db.String(16), db.ForeignKey('game.id'))
     name = db.Column(db.String(64), nullable=False)
     role = db.Column(db.String(16), nullable=False)
+    can_view = db.Column(db.Boolean, default=False)
 
     board = db.relationship('Board', uselist=False, backref='user_board')
 
@@ -46,6 +47,7 @@ class User(db.Model):
                 'game_id': self.game_id,
                 'name': self.name,
                 'role': self.role,
+                'can_view': self.can_view,
                 'board': None if self.board is None else self.board.json()}
 
 
