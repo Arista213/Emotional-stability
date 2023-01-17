@@ -4,8 +4,6 @@ const gameId = getCookie('game_id')
 const userId = Number(getCookie('user_id'))
 const usersContainer = document.getElementById('users-container')
 const showBtn = document.getElementById('show')
-let lastChips = {}
-let checkLastChips = false
 
 createYou().then(r => true)
 
@@ -69,23 +67,22 @@ async function update() {
             .then(response => response.json())
             .then(data => {
                 data.forEach(chip => {
+                    let flag = true
                     let boardCoords = getCoords(board)
-                    if(chip['id'] in lastChips) {
-                        console.log('1')
-                        if (chip['left'] - lastChips[chip['id']]['left'] > 1 || chip['top'] - lastChips[chip['id']]['top'] > 1 ||
-                            chip['left'] - lastChips[chip['id']]['left'] < -1 || chip['top'] - lastChips[chip['id']]['top'] < -1) {
-                            lastChips[chip['id']] = chip
-                            console.log('2')
+                    document.getElementsByName('chip').forEach(oldChip => {
+                        if (oldChip.id === chip['id'].toFixed()) {
+                            flag = true
                             let k = boardCoords.height / 1024.0
                             let left = chip['left'] * k + boardCoords.left
                             let top = chip['top'] * k + boardCoords.top
                             let newChip = document.getElementById(chip['id'])
-                            newChip.style.left = left + 'px'
-                            newChip.style.top = top + 'px'
+                            newChip.parentNode.removeChild(newChip)
+                            console.log(1)
+                            //newChip.style.left = left + 'px'
+                            //newChip.style.top = top + 'px'
                         }
-                    }
-                    else {
-                        console.log('3')
+                    })
+                    if (flag) {
                         let k = boardCoords.height / 1024.0
                         let left = chip['left'] * k + boardCoords.left
                         let top = chip['top'] * k + boardCoords.top
@@ -99,7 +96,6 @@ async function update() {
                         let height = 0.125 * boardCoords.height
                         newChip.style.height = height + 'px'
                         document.body.appendChild(newChip);
-                        lastChips[chip['id']] = chip
                     }
                 })
             })
@@ -152,7 +148,6 @@ async function fillField() {
             .then(response => response.json())
             .then(data => {
                 data.forEach(chip => {
-                    lastChips[chip['id']] = chip
                     let k = boardCoords.height / 1024.0
                     let left = chip['left'] * k + boardCoords.left
                     let top = chip['top'] * k + boardCoords.top
