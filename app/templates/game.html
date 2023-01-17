@@ -20,17 +20,19 @@
     </header>
     <main>
         <div class="left-panel">
+            <div class="left-panel-item" id="end-game-container"></div>
             <label class="left-panel-item">
                 <p class="section-title">Блокнот</p>
-                <textarea class="note"></textarea>
+                <textarea id="note" class="note"></textarea>
+                <script src="{{ url_for('static', filename='js/noteController.js') }}" async></script>
             </label>
             <div id="chips" class="left-panel-item chips"  style="display: none">
                 <p class="section-title">Фишки</p>
-                <div class="chips-container">
+                <div class="chips-container" id="chips_container">
                     <img src="{{ url_for('static', filename='images/chips/white-chip.svg') }}" class="chip"
-                        id="white-chip" alt="white-chip">
+                        id="white-chip" alt="white-chip" style="width: 100px; height:100px;">
                     <img src="{{ url_for('static', filename='images/chips/black-chip.svg') }}" class="chip"
-                        id="black-chip" alt="white-chip">
+                        id="black-chip" alt="white-chip" style="width: 100px; height:100px;">
                 </div>
             </div>
             <form id="back-form" class="left-panel-item" method="post" style="display: none">
@@ -41,9 +43,12 @@
             </form>
         </div>
         <div id="field" class="field">
+            <img class="board" id="board" src="{{ url_for('static', filename='images/board.svg') }}" alt="Игровое поле" >
+
         </div>
         <img id="show" class="show-btn" src="{{ url_for('static', filename='images/icons/show.svg') }}" alt="copy" height="32px" hidden>
     </main>
     <script src="{{ url_for('static', filename='js/updateUsers.js') }}" async></script>
     <script src="{{ url_for('static', filename='js/showBtnController.js') }}" async></script>
+    <script src="{{ url_for('static', filename='js/chipController.js') }}" async></script>
 {% endblock %}

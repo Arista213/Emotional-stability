@@ -25,7 +25,7 @@ def request_game(token):
     with app.app_context():
         game = Game.query.filter(Game.id == token).first()
         if game is None:
-            return 'Нет такого Ведущего', 404
+            return None, 404
 
         if request.method == 'GET':
             return jsonify(game.json())
@@ -33,12 +33,12 @@ def request_game(token):
         elif request.method == 'DELETE':
             users = User.query.filter(User.game_id == token).all()
             for user in users:
+                db.session.delete(user.note)
                 if user.board is not None:
                     board = user.board
                     chips = Chip.query.filter(Chip.board_id == board.id).all()
                     for chip in chips:
                         db.session.delete(chip)
-                    db.session.delete(board.note)
                     db.session.delete(board)
                 db.session.delete(user)
             db.session.delete(game)
@@ -120,9 +120,9 @@ def request_board(token, user_id):
         if user.board is None:
             return 'У данного игрока нет Доски', 404
 
-        if request.method('GET'):
+        if request.method == 'GET':
             return jsonify(user.board.json()), 200
-        elif request.method('PUT'):
+        elif request.method == 'PUT':
             data = request.json
             user.board.trait_name = data['trait_name']
             db.session.commit()
@@ -150,11 +150,12 @@ def request_chips(token, user_id):
 
     elif request.method == 'POST':
         data = request.json
+        print(data)
         chip = Chip(color=data['color'], left=data['left'], top=data['top'])
         user.board.chips.append(chip)
         db.session.add(chip)
         db.session.commit()
-        return redirect(url_for('request_chip', token=token, user_id=user.id, chip_id=chip.id))
+        return jsonify(chip.json())
 
 
 @app.route('/api/games/<token>/users/<user_id>/board/chips/<chip_id>', methods=['GET', 'PUT', 'DELETE'])
@@ -189,15 +190,25 @@ def request_chip(token, user_id, chip_id):
     return 404
 
 
-@app.route('/api/games/<token>/users/<user_id>/board/note', methods=['GET'])
+@app.route('/api/games/<token>/users/<user_id>/note', methods=['GET', 'PUT'])
 def request_note(token, user_id):
-    game = Game.query.filter(Game.id == token).first()
-    if game is None:
-        return 'Нет такого Ведущего', 404
-    user = User.query.filter(User.id == user_id).first()
-    if user is None:
-        return 'Нет такого Игрока', 404
-    if user.board is None:
-        return 'У данного игрока нет Доски', 404
-    return jsonify(user.board.note.json()), 200
+    with app.app_context():
+        game = Game.query.filter(Game.id == token).first()
+        if game is None:
+            return 'Нет такого Ведущего', 404
+        user = User.query.filter(User.id == user_id).first()
+        if user is None:
+            return 'Нет такого Игрока', 404
+        if request.method == 'GET':
+            print(user.note.json())
+            return jsonify(user.note.json()), 200
+        elif request.method == 'PUT':
+            data = request.json
+            if 'note_text' in data:
+                user.note.note_text = data['note_text']
+                db.session.commit()
+            return jsonify(user.note.json()), 200
+        else:
+            return 404
+
 

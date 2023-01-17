@@ -1,3 +1,5 @@
+import datetime
+
 from app import app
 from flask import render_template, request, redirect, url_for, flash, make_response
 from models import *
@@ -40,6 +42,22 @@ def index():
             elif 'btn-log-on' in request.form:
                 name = request.form['name']
                 id = request.form['token']
+                games = Game.query.all()
+                date_time_now = datetime.datetime.utcnow()
+                for game in games:
+                    if date_time_now - game.created_date > datetime.timedelta(hours=12):
+                        users = User.query.filter(User.game_id == id).all()
+                        for user in users:
+                            db.session.delete(user.note)
+                            if user.board is not None:
+                                board = user.board
+                                chips = Chip.query.filter(Chip.board_id == board.id).all()
+                                for chip in chips:
+                                    db.session.delete(chip)
+                                db.session.delete(board)
+                            db.session.delete(user)
+                        db.session.delete(game)
+                        db.session.commit()
                 game = Game.query.filter(Game.id == id).first()
                 if game is None:
                     flash('error')
