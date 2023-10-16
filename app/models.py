@@ -10,6 +10,7 @@ class Game(db.Model):
     users = db.relationship('User', backref='game_users', lazy='joined')
 
     def __init__(self, token, name, has_board):
+        db.create_all()
         if token is None:
             self.id = generate_token()
         else:
