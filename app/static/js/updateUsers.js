@@ -142,7 +142,7 @@ async function fillField() {
     let user = await response.json();
     const board = document.getElementById("board")
     if (user['board'] !== null) {
-        board.src = '/static/images/board.svg'
+        board.src = '/static/images/board.png'
         let boardCoords = getCoords(board)
         fetch('/api/games/' + gameId + '/users/' + demoUserId + '/board/chips')
             .then(response => response.json())
